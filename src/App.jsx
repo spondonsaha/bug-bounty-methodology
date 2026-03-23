@@ -689,8 +689,7 @@ export default function BugHuntingChecklist() {
         </div>
 
         {/* Stats — full width grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 12, marginBottom: 20 }}>
-          {[
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 12, marginBottom: 20 }}>          {[
             { label: "CATEGORIES", value: checklistData.length, color: "#00ff9f" },
             { label: "TOTAL STEPS", value: totalSteps, color: "#22d3ee" },
             { label: "COMPLETED", value: completedCount, color: "#f472b6" },
