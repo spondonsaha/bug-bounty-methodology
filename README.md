@@ -1,4 +1,4 @@
-# 🎯 0xSpondon's Attack Arsenal
+# 🎯 Bug-Bounty-Methodology 
 > A comprehensive interactive bug bounty hunting checklist — 2026 Edition
 
 <div align="center">
