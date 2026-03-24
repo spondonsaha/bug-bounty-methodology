@@ -16,9 +16,9 @@ const checklistData = [
       { id: "1g", text: "Fingerprint tech stack with whatweb on all live hosts" },
       { id: "1h", text: "Screenshot all live hosts with gowitness or eyewitness" },
       {id: "1i",text:"Run: findomain --quiet -t target.com | tee findomain.txt"},
-      {id: "1j", text: "Run: sublist3r -d tilbd.net -t 50 -o sublist3r.txt"},
+      {id: "1j", text: "Run: sublist3r -d target.com -t 50 -o sublist3r.txt"},
       {id: "1k", text: "crt.sh: curl -s -H 'Accept: application/json' 'https://crt.sh/?q=%25.target.com&output=json' | jq -r '.[].name_value' | sed 's/\\*\\.//g' | sort -u | httpx -silent" },
-      {id:"1l", text: "wayback: curl -s 'http://web.archive.org/cdx/search/cdx?url=*.ed.gov/*&output=text&fl=original&collapse=urlkey' | sed -e 's_https*://__' -e 's/\/.*//g' | sort -u | anew wayback_subs2.txt"},
+      {id:"1l", text: "wayback: curl -s 'http://web.archive.org/cdx/search/cdx?url=*.target.com/*&output=text&fl=original&collapse=urlkey' | sed -e 's_https*://__' -e 's/\/.*//g' | sort -u | anew wayback_subs2.txt"},
       {id: "1m",text: "Magicrecon: magicrecon -w target.com"}
       ]
   },
