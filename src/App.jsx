@@ -18,9 +18,9 @@ const checklistData = [
       {id: "1i",text:"Run: findomain --quiet -t target.com | tee findomain.txt"},
       {id: "1j", text: "Run: sublist3r -d target.com -t 50 -o sublist3r.txt"},
       {id: "1k", text: "crt.sh: curl -s -H 'Accept: application/json' 'https://crt.sh/?q=%25.target.com&output=json' | jq -r '.[].name_value' | sed 's/\\*\\.//g' | sort -u | httpx -silent" },
-      {id:"1l", text: "wayback: curl -s 'http://web.archive.org/cdx/search/cdx?url=*.target.com/*&output=text&fl=original&collapse=urlkey' | sed -e 's_https*://__' -e 's/\/.*//g' | sort -u | anew wayback_subs2.txt"},
+      {id:"1l", text: "wayback: curl -s 'http://web.archive.org/cdx/search/cdx?url=*.target.com/*&output=text&fl=original&collapse=urlkey' | sed -e 's_https*://__' -e 's/\\/.*//g' | sort -u | anew wayback_subs2.txt"},
       {id: "1m",text: "Magicrecon: magicrecon -w target.com"}
-      ]
+    ]
   },
   {
     id: 2, phase: "RECON", color: "#00ff9f", icon: "🔍",
@@ -67,11 +67,11 @@ const checklistData = [
     description: "Extract secrets and endpoints from JavaScript files",
     tools: ["LinkFinder", "SecretFinder", "JSParser", "katana", "truffleHog"],
     steps: [
-      { id: "4a", text: "Complete JS: subfinder -d target.com -silent | httpx -silent | katana -d 5 -jc -silent | grep -iE '\.js$' | anew js.txt"},
+      { id: "4a", text: "Complete JS: subfinder -d target.com -silent | httpx -silent | katana -d 5 -jc -silent | grep -iE '\\.js$' | anew js.txt"},
       {id: "4b",text: "Extract Secret: cat js.txt | httpx -silent -sr -srd js_files/ && nuclei -t exposures/ -target js.txt"},
       {id:"4c",text: "LinkFinder on JS Files: cat js.txt | xargs -I@ -P10 bash -c 'python3 linkfinder.py -i @ -o cli 2>/dev/null' | anew endpoints.txt"},
       {id:"4d",text: "API Keys from JS: cat js.txt | nuclei -t http/exposures/tokens/ -silent | anew api_keys.txt"},
-      {id: "4e",text: "Extract S3 Buckets from JS: cat js.txt | xargs -I@ curl -s @ | grep -oE '[a-zA-Z0-9.-]+\.s3\.amazonaws\.com|s3://[a-zA-Z0-9.-]+|s3-[a-zA-Z0-9-]+\.amazonaws\.com/[a-zA-Z0-9.-]+' | sort -u | anew s3_from_js.txt"},
+      {id: "4e",text: "Extract S3 Buckets from JS: cat js.txt | xargs -I@ curl -s @ | grep -oE '[a-zA-Z0-9.-]+\\.s3\\.amazonaws\\.com|s3://[a-zA-Z0-9.-]+|s3-[a-zA-Z0-9-]+\\.amazonaws\\.com/[a-zA-Z0-9.-]+' | sort -u | anew s3_from_js.txt"},
       { id: "4f", text: "Collect all JS: katana -u target.com -jc | grep '.js' | tee jsfiles.txt" },
       { id: "4g", text: "Run LinkFinder on each JS file for hidden endpoints" },
       { id: "4h", text: "Run SecretFinder for API keys, tokens, secrets in JS" },
@@ -489,7 +489,7 @@ const checklistData = [
       { id: "19ae", text: "Test SSRF via file URL: upload file referencing file:///etc/passwd as source URL" },
       { id: "19af", text: "Check upload directory listing: visit /uploads/ — is directory browsing enabled?" },
       { id: "19ag", text: "Test CSV injection: upload CSV with =cmd|'/C calc'!A1 formula — opens on admin import" },
-          ],
+    ],
   },
   {
     id: 20, phase: "INJECT", color: "#f87171", icon: "📂",
@@ -627,11 +627,123 @@ const phaseColors = {
   LOGIC: "#f472b6",
 };
 
+// ── THEME DEFINITIONS ──────────────────────────────────────────────────────
+const DARK = {
+  name: "dark",
+  bg:          "#060610",
+  headerBg:    "#08081a",
+  headerBorder:"#1e293b",
+  cardBg:      "#0d0d20",
+  cardBorder:  "#1a1a30",
+  stepBg:      "#0a0a18",
+  stepBorder:  "#14142a",
+  inputBg:     "#0d0d20",
+  inputBorder: "#1e293b",
+  filterBg:    "#0d0d20",
+  filterBorder:"#1e293b",
+  footerBg:    "#0d0d20",
+  footerBorder:"#1a1a30",
+  progressTrack:"#0f172a",
+  miniTrack:   "#0a0a18",
+  badgeBg:     "#00ff9f08",
+  badgeBorder: "#00ff9f30",
+  badgeText:   "#00ff9f",
+  titleLine1:  "#ffffff",
+  titleLine2:  "#00ff9f",
+  titleGlow:   "0 0 60px rgba(0,255,159,0.12)",
+  titleGlow2:  "0 0 60px rgba(0,255,159,0.45)",
+  subText:     "#475569",
+  statBg:      "#0d0d20",
+  statBorder:  "22",
+  labelText:   "#475569",
+  searchText:  "#e2e8f0",
+  filterText:  "#64748b",
+  filterActBg: "18",
+  cardTitle:   "#f1f5f9",
+  phaseBg:     "15",
+  phaseBorder: "22",
+  descText:    "#64748b",
+  pctDim:      "#475569",
+  countText:   "#334155",
+  chevron:     "#334155",
+  toolBg:      "#111128",
+  toolBorder:  "#1a1a30",
+  toolText:    "#64748b",
+  codeText:    "#94a3b8",
+  codeDone:    "#334155",
+  checkBorder: "#2d3748",
+  checkColor:  "#060610",
+  scanline:    "rgba(0,255,159,0.007)",
+  footerWarn:  "#f87171",
+  footerDesc:  "#334155",
+  footerDescHL:"#64748b",
+  footerCredit:"#1e293b",
+  legendText:  "#475569",
+  emptyText:   "#1e293b",
+};
+
+const LIGHT = {
+  name: "light",
+  bg:          "#f0f4f8",
+  headerBg:    "#ffffff",
+  headerBorder:"#cbd5e1",
+  cardBg:      "#ffffff",
+  cardBorder:  "#e2e8f0",
+  stepBg:      "#f8fafc",
+  stepBorder:  "#e2e8f0",
+  inputBg:     "#ffffff",
+  inputBorder: "#cbd5e1",
+  filterBg:    "#ffffff",
+  filterBorder:"#cbd5e1",
+  footerBg:    "#ffffff",
+  footerBorder:"#e2e8f0",
+  progressTrack:"#e2e8f0",
+  miniTrack:   "#f1f5f9",
+  badgeBg:     "#00c97808",
+  badgeBorder: "#00c97830",
+  badgeText:   "#059669",
+  titleLine1:  "#0f172a",
+  titleLine2:  "#2563eb",
+  titleGlow:   "none",
+  titleGlow2:  "none",
+  subText:     "#64748b",
+  statBg:      "#ffffff",
+  statBorder:  "30",
+  labelText:   "#94a3b8",
+  searchText:  "#0f172a",
+  filterText:  "#64748b",
+  filterActBg: "15",
+  cardTitle:   "#0f172a",
+  phaseBg:     "12",
+  phaseBorder: "30",
+  descText:    "#64748b",
+  pctDim:      "#94a3b8",
+  countText:   "#94a3b8",
+  chevron:     "#94a3b8",
+  toolBg:      "#f1f5f9",
+  toolBorder:  "#e2e8f0",
+  toolText:    "#475569",
+  codeText:    "#334155",
+  codeDone:    "#94a3b8",
+  checkBorder: "#cbd5e1",
+  checkColor:  "#ffffff",
+  scanline:    "transparent",
+  footerWarn:  "#dc2626",
+  footerDesc:  "#475569",
+  footerDescHL:"#0f172a",
+  footerCredit:"#94a3b8",
+  legendText:  "#64748b",
+  emptyText:   "#94a3b8",
+};
+
 export default function BugHuntingChecklist() {
   const [completed, setCompleted] = useState({});
   const [expanded, setExpanded] = useState({});
   const [filter, setFilter] = useState("ALL");
   const [search, setSearch] = useState("");
+  const [isDark, setIsDark] = useState(true);
+
+  const T = isDark ? DARK : LIGHT;
 
   const toggleStep = (stepId) => setCompleted((p) => ({ ...p, [stepId]: !p[stepId] }));
   const toggleCard = (id) => setExpanded((p) => ({ ...p, [id]: !p[id] }));
@@ -659,62 +771,86 @@ export default function BugHuntingChecklist() {
   const collapseAll = () => { const o = {}; filtered.forEach((c) => (o[c.id] = false)); setExpanded((p) => ({ ...p, ...o })); };
 
   return (
-    <div style={{ minHeight: "100vh", width: "100%", background: "#060610", fontFamily: "'Courier New', monospace", color: "#e2e8f0", margin: 0, padding: 0, boxSizing: "border-box" }}>
+    <div style={{ minHeight: "100vh", width: "100%", background: T.bg, fontFamily: "'Courier New', monospace", color: T.searchText, margin: 0, padding: 0, boxSizing: "border-box", transition: "background 0.3s, color 0.3s" }}>
 
       {/* Scanline */}
-      <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0, background: "repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,159,0.007) 2px,rgba(0,255,159,0.007) 4px)" }} />
+      <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0, background: `repeating-linear-gradient(0deg,transparent,transparent 2px,${T.scanline} 2px,${T.scanline} 4px)` }} />
 
-      {/* ─── HEADER — edge to edge ─── */}
-      <div style={{ width: "100%", background: "#08081a", borderBottom: "2px solid #1e293b", padding: "36px 40px 28px", boxSizing: "border-box", position: "relative", zIndex: 1 }}>
+      {/* ─── HEADER ─── */}
+      <div style={{ width: "100%", background: T.headerBg, borderBottom: `2px solid ${T.headerBorder}`, padding: "36px 40px 28px", boxSizing: "border-box", position: "relative", zIndex: 1, transition: "background 0.3s, border-color 0.3s" }}>
 
-        {/* Badge */}
-        <div style={{ textAlign: "center", marginBottom: 16 }}>
-          <span style={{ display: "inline-block", border: "1px solid #00ff9f30", padding: "4px 20px", borderRadius: 99, fontSize: 10, color: "#00ff9f", letterSpacing: 4, background: "#00ff9f08" }}>
+        {/* Badge row — badge left, toggle right */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16, position: "relative" }}>
+          <span style={{ display: "inline-block", border: `1px solid ${T.badgeBorder}`, padding: "4px 20px", borderRadius: 99, fontSize: 10, color: T.badgeText, letterSpacing: 4, background: T.badgeBg }}>
             ◈ AUTHORIZED USE ONLY — Spondon Saha ◈
           </span>
+
+          {/* ── THEME TOGGLE ── */}
+          <button
+            onClick={() => setIsDark(d => !d)}
+            title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            style={{
+              position: "absolute", right: 0,
+              background: isDark ? "#1e293b" : "#e2e8f0",
+              border: `1px solid ${isDark ? "#334155" : "#cbd5e1"}`,
+              borderRadius: 99,
+              padding: "5px 14px",
+              cursor: "pointer",
+              display: "flex", alignItems: "center", gap: 7,
+              fontSize: 11, fontFamily: "inherit",
+              color: isDark ? "#94a3b8" : "#475569",
+              letterSpacing: 1,
+              transition: "all 0.2s",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <span style={{ fontSize: 14 }}>{isDark ? "☀️" : "🌙"}</span>
+            <span>{isDark ? "LIGHT" : "DARK"}</span>
+          </button>
         </div>
 
-        {/* Title — two lines, never overlapping */}
+        {/* Title */}
         <div style={{ textAlign: "center", marginBottom: 8 }}>
-          <div style={{ fontSize: "clamp(28px, 4.5vw, 60px)", fontWeight: 900, color: "#ffffff", letterSpacing: -1, lineHeight: 1.05, textShadow: "0 0 60px rgba(0,255,159,0.12)" }}>
+          <div style={{ fontSize: "clamp(28px, 4.5vw, 60px)", fontWeight: 900, color: T.titleLine1, letterSpacing: -1, lineHeight: 1.05, textShadow: T.titleGlow }}>
             BUG HUNTER'S
           </div>
-          <div style={{ fontSize: "clamp(28px, 4.5vw, 60px)", fontWeight: 900, color: "#00ff9f", letterSpacing: -1, lineHeight: 1.05, textShadow: "0 0 60px rgba(0,255,159,0.45)" }}>
+          <div style={{ fontSize: "clamp(28px, 4.5vw, 60px)", fontWeight: 900, color: T.titleLine2, letterSpacing: -1, lineHeight: 1.05, textShadow: T.titleGlow2 }}>
             MASTER CHECKLIST
           </div>
         </div>
 
-        <div style={{ textAlign: "center", color: "#475569", fontSize: 11, letterSpacing: 3, marginBottom: 28 }}>
+        <div style={{ textAlign: "center", color: T.subText, fontSize: 11, letterSpacing: 3, marginBottom: 28 }}>
           {checklistData.length} CATEGORIES &nbsp;·&nbsp; {totalSteps} STEPS &nbsp;·&nbsp; 2026 EDITION
         </div>
 
-        {/* Stats — full width grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 12, marginBottom: 20 }}>          {[
+        {/* Stats */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 12, marginBottom: 20 }}>
+          {[
             { label: "CATEGORIES", value: checklistData.length, color: "#00ff9f" },
             { label: "TOTAL STEPS", value: totalSteps, color: "#22d3ee" },
             { label: "COMPLETED", value: completedCount, color: "#f472b6" },
             { label: "PROGRESS", value: `${progress}%`, color: "#fbbf24" },
           ].map((s) => (
-            <div key={s.label} style={{ background: "#0d0d20", border: `1px solid ${s.color}22`, borderRadius: 12, padding: "18px 12px", textAlign: "center" }}>
+            <div key={s.label} style={{ background: T.statBg, border: `1px solid ${s.color}${T.statBorder}`, borderRadius: 12, padding: "18px 12px", textAlign: "center", transition: "background 0.3s" }}>
               <div style={{ fontSize: 30, fontWeight: 900, color: s.color, lineHeight: 1 }}>{s.value}</div>
-              <div style={{ fontSize: 9, color: "#475569", letterSpacing: 3, marginTop: 8 }}>{s.label}</div>
+              <div style={{ fontSize: 9, color: T.labelText, letterSpacing: 3, marginTop: 8 }}>{s.label}</div>
             </div>
           ))}
         </div>
 
         {/* Progress bar */}
         <div>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "#475569", letterSpacing: 2, marginBottom: 8 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: T.labelText, letterSpacing: 2, marginBottom: 8 }}>
             <span>OVERALL PROGRESS</span>
-            <span style={{ color: "#00ff9f" }}>{completedCount} / {totalSteps} steps</span>
+            <span style={{ color: T.titleLine2 }}>{completedCount} / {totalSteps} steps</span>
           </div>
-          <div style={{ background: "#0f172a", borderRadius: 99, height: 8, overflow: "hidden" }}>
-            <div style={{ width: `${progress}%`, height: "100%", background: "linear-gradient(90deg,#00ff9f,#22d3ee,#c084fc,#f472b6)", borderRadius: 99, transition: "width 0.5s ease", boxShadow: "0 0 16px rgba(0,255,159,0.35)" }} />
+          <div style={{ background: T.progressTrack, borderRadius: 99, height: 8, overflow: "hidden" }}>
+            <div style={{ width: `${progress}%`, height: "100%", background: "linear-gradient(90deg,#00ff9f,#22d3ee,#c084fc,#f472b6)", borderRadius: 99, transition: "width 0.5s ease", boxShadow: progress > 0 ? "0 0 16px rgba(0,255,159,0.35)" : "none" }} />
           </div>
         </div>
       </div>
 
-      {/* ─── BODY — full width ─── */}
+      {/* ─── BODY ─── */}
       <div style={{ width: "100%", padding: "24px 40px", boxSizing: "border-box", position: "relative", zIndex: 1 }}>
 
         {/* Search */}
@@ -722,7 +858,7 @@ export default function BugHuntingChecklist() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="🔍   Search techniques, tools, payloads, commands..."
-          style={{ width: "100%", boxSizing: "border-box", background: "#0d0d20", border: "1px solid #1e293b", borderRadius: 10, padding: "13px 18px", color: "#e2e8f0", fontSize: 13, fontFamily: "inherit", marginBottom: 16, outline: "none" }}
+          style={{ width: "100%", boxSizing: "border-box", background: T.inputBg, border: `1px solid ${T.inputBorder}`, borderRadius: 10, padding: "13px 18px", color: T.searchText, fontSize: 13, fontFamily: "inherit", marginBottom: 16, outline: "none", transition: "background 0.3s, border-color 0.3s, color 0.3s" }}
         />
 
         {/* Filters */}
@@ -731,12 +867,12 @@ export default function BugHuntingChecklist() {
             const col = phaseColors[phase] || "#00ff9f";
             const active = filter === phase;
             return (
-              <button key={phase} onClick={() => setFilter(phase)} style={{ padding: "6px 14px", borderRadius: 6, border: `1px solid ${active ? col : "#1e293b"}`, background: active ? `${col}18` : "#0d0d20", color: active ? col : "#64748b", fontSize: 10, letterSpacing: 2, cursor: "pointer", fontFamily: "inherit", transition: "all 0.15s", fontWeight: active ? 700 : 400 }}>{phase}</button>
+              <button key={phase} onClick={() => setFilter(phase)} style={{ padding: "6px 14px", borderRadius: 6, border: `1px solid ${active ? col : T.filterBorder}`, background: active ? `${col}${T.filterActBg}` : T.filterBg, color: active ? col : T.filterText, fontSize: 10, letterSpacing: 2, cursor: "pointer", fontFamily: "inherit", transition: "all 0.15s", fontWeight: active ? 700 : 400 }}>{phase}</button>
             );
           })}
           <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
             {[["EXPAND ALL", expandAll], ["COLLAPSE ALL", collapseAll]].map(([lbl, fn]) => (
-              <button key={lbl} onClick={fn} style={{ padding: "6px 14px", borderRadius: 6, border: "1px solid #1e293b", background: "#0d0d20", color: "#64748b", fontSize: 9, letterSpacing: 1, cursor: "pointer", fontFamily: "inherit" }}>{lbl}</button>
+              <button key={lbl} onClick={fn} style={{ padding: "6px 14px", borderRadius: 6, border: `1px solid ${T.filterBorder}`, background: T.filterBg, color: T.filterText, fontSize: 9, letterSpacing: 1, cursor: "pointer", fontFamily: "inherit" }}>{lbl}</button>
             ))}
           </div>
         </div>
@@ -746,12 +882,12 @@ export default function BugHuntingChecklist() {
           {Object.entries(phaseColors).map(([ph, col]) => (
             <div key={ph} style={{ display: "flex", alignItems: "center", gap: 6 }}>
               <div style={{ width: 8, height: 8, borderRadius: 2, background: col }} />
-              <span style={{ fontSize: 10, color: "#475569", letterSpacing: 1 }}>{ph}</span>
+              <span style={{ fontSize: 10, color: T.legendText, letterSpacing: 1 }}>{ph}</span>
             </div>
           ))}
         </div>
 
-        {/* Cards — responsive 2-col grid */}
+        {/* Cards */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 600px), 1fr))", gap: 10 }}>
           {filtered.map((card) => {
             const { pct, done, total } = getCardProg(card);
@@ -760,41 +896,41 @@ export default function BugHuntingChecklist() {
             const col = card.color;
 
             return (
-              <div key={card.id} style={{ background: "#0d0d20", border: `1px solid ${allDone ? col + "55" : "#1a1a30"}`, borderRadius: 12, overflow: "hidden", transition: "all 0.3s", boxShadow: allDone ? `0 0 28px ${col}14` : "none" }}>
+              <div key={card.id} style={{ background: T.cardBg, border: `1px solid ${allDone ? col + "55" : T.cardBorder}`, borderRadius: 12, overflow: "hidden", transition: "all 0.3s", boxShadow: allDone ? `0 0 28px ${col}14` : "none" }}>
 
                 {/* Header row */}
                 <div onClick={() => toggleCard(card.id)} style={{ padding: "15px 18px", cursor: "pointer", display: "flex", alignItems: "center", gap: 13, userSelect: "none" }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 10, flexShrink: 0, background: `${col}12`, border: `1px solid ${col}28`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 10, flexShrink: 0, background: `${col}${T.phaseBg}`, border: `1px solid ${col}${T.phaseBorder}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>
                     {allDone ? "✅" : card.icon}
                   </div>
 
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 3 }}>
-                      <span style={{ fontSize: 9, letterSpacing: 2, color: col, background: `${col}15`, padding: "2px 8px", borderRadius: 4, border: `1px solid ${col}22`, whiteSpace: "nowrap" }}>{card.phase}</span>
-                      <span style={{ fontWeight: 700, fontSize: 14, color: "#f1f5f9" }}>{String(card.id).padStart(2, "0")}. {card.title}</span>
+                      <span style={{ fontSize: 9, letterSpacing: 2, color: col, background: `${col}${T.phaseBg}`, padding: "2px 8px", borderRadius: 4, border: `1px solid ${col}${T.phaseBorder}`, whiteSpace: "nowrap" }}>{card.phase}</span>
+                      <span style={{ fontWeight: 700, fontSize: 14, color: T.cardTitle }}>{String(card.id).padStart(2, "0")}. {card.title}</span>
                     </div>
-                    <div style={{ fontSize: 11, color: "#64748b" }}>{card.description}</div>
+                    <div style={{ fontSize: 11, color: T.descText }}>{card.description}</div>
                   </div>
 
                   <div style={{ textAlign: "right", flexShrink: 0, marginRight: 8 }}>
-                    <div style={{ fontSize: 17, fontWeight: 700, color: pct === 100 ? col : "#475569" }}>{pct}%</div>
-                    <div style={{ fontSize: 9, color: "#334155" }}>{done}/{total}</div>
+                    <div style={{ fontSize: 17, fontWeight: 700, color: pct === 100 ? col : T.pctDim }}>{pct}%</div>
+                    <div style={{ fontSize: 9, color: T.countText }}>{done}/{total}</div>
                   </div>
 
-                  <div style={{ color: "#334155", fontSize: 14, transform: isOpen ? "rotate(180deg)" : "rotate(0)", transition: "transform 0.2s", flexShrink: 0 }}>▾</div>
+                  <div style={{ color: T.chevron, fontSize: 14, transform: isOpen ? "rotate(180deg)" : "rotate(0)", transition: "transform 0.2s", flexShrink: 0 }}>▾</div>
                 </div>
 
                 {/* Mini progress */}
-                <div style={{ height: 2, background: "#0a0a18" }}>
+                <div style={{ height: 2, background: T.miniTrack }}>
                   <div style={{ width: `${pct}%`, height: "100%", background: col, transition: "width 0.3s", boxShadow: pct > 0 ? `0 0 8px ${col}70` : "none" }} />
                 </div>
 
                 {/* Body */}
                 {isOpen && (
-                  <div style={{ padding: "16px 18px", borderTop: "1px solid #0f0f22" }}>
+                  <div style={{ padding: "16px 18px", borderTop: `1px solid ${T.cardBorder}` }}>
                     <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 14 }}>
                       {card.tools.map((t) => (
-                        <span key={t} style={{ fontSize: 10, padding: "3px 10px", background: "#111128", borderRadius: 99, color: "#64748b", letterSpacing: 1, border: "1px solid #1a1a30" }}>{t}</span>
+                        <span key={t} style={{ fontSize: 10, padding: "3px 10px", background: T.toolBg, borderRadius: 99, color: T.toolText, letterSpacing: 1, border: `1px solid ${T.toolBorder}` }}>{t}</span>
                       ))}
                     </div>
 
@@ -802,11 +938,11 @@ export default function BugHuntingChecklist() {
                       {card.steps.map((step) => {
                         const isDone = completed[step.id];
                         return (
-                          <div key={step.id} onClick={() => toggleStep(step.id)} style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "9px 12px", borderRadius: 8, cursor: "pointer", background: isDone ? `${col}09` : "#0a0a18", border: `1px solid ${isDone ? col + "30" : "#14142a"}`, transition: "all 0.15s" }}>
-                            <div style={{ width: 17, height: 17, borderRadius: 4, flexShrink: 0, marginTop: 2, border: `2px solid ${isDone ? col : "#2d3748"}`, background: isDone ? col : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: "#060610", fontWeight: 900, transition: "all 0.15s" }}>
+                          <div key={step.id} onClick={() => toggleStep(step.id)} style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "9px 12px", borderRadius: 8, cursor: "pointer", background: isDone ? `${col}09` : T.stepBg, border: `1px solid ${isDone ? col + "30" : T.stepBorder}`, transition: "all 0.15s" }}>
+                            <div style={{ width: 17, height: 17, borderRadius: 4, flexShrink: 0, marginTop: 2, border: `2px solid ${isDone ? col : T.checkBorder}`, background: isDone ? col : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: T.checkColor, fontWeight: 900, transition: "all 0.15s" }}>
                               {isDone ? "✓" : ""}
                             </div>
-                            <code style={{ fontSize: 11.5, lineHeight: 1.7, color: isDone ? "#334155" : "#94a3b8", textDecoration: isDone ? "line-through" : "none", wordBreak: "break-all" }}>
+                            <code style={{ fontSize: 11.5, lineHeight: 1.7, color: isDone ? T.codeDone : T.codeText, textDecoration: isDone ? "line-through" : "none", wordBreak: "break-all" }}>
                               {step.text}
                             </code>
                           </div>
@@ -821,19 +957,19 @@ export default function BugHuntingChecklist() {
         </div>
 
         {filtered.length === 0 && (
-          <div style={{ textAlign: "center", padding: "80px 0", color: "#1e293b", fontSize: 14 }}>
+          <div style={{ textAlign: "center", padding: "80px 0", color: T.emptyText, fontSize: 14 }}>
             No results found for "{search}"
           </div>
         )}
 
         {/* Footer */}
-        <div style={{ marginTop: 32, textAlign: "center", padding: "22px 32px", border: "1px solid #1a1a30", borderRadius: 12, background: "#0d0d20" }}>
-          <div style={{ color: "#f87171", fontSize: 10, letterSpacing: 3, marginBottom: 8 }}>⚠️ LEGAL & ETHICAL REMINDER</div>
-          <p style={{ color: "#334155", fontSize: 11, margin: "0 0 8px", lineHeight: 2 }}>
-            Only test targets with <span style={{ color: "#64748b" }}>explicit written permission</span>. Verify scope before every test.<br />
+        <div style={{ marginTop: 32, textAlign: "center", padding: "22px 32px", border: `1px solid ${T.footerBorder}`, borderRadius: 12, background: T.footerBg, transition: "background 0.3s" }}>
+          <div style={{ color: T.footerWarn, fontSize: 10, letterSpacing: 3, marginBottom: 8 }}>⚠️ LEGAL & ETHICAL REMINDER</div>
+          <p style={{ color: T.footerDesc, fontSize: 11, margin: "0 0 8px", lineHeight: 2 }}>
+            Only test targets with <span style={{ color: T.footerDescHL }}>explicit written permission</span>. Verify scope before every test.<br />
             Document everything • Report responsibly • Unauthorized testing is illegal.
           </p>
-          <p style={{ color: "#1e293b", fontSize: 10, margin: 0, letterSpacing: 3 }}>BUILT BY SPONDON • 2026</p>
+          <p style={{ color: T.footerCredit, fontSize: 10, margin: 0, letterSpacing: 3 }}>BUILT BY SPONDON • 2026</p>
         </div>
 
       </div>
