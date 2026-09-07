@@ -630,110 +630,112 @@ const phaseColors = {
 // ── THEME DEFINITIONS ──────────────────────────────────────────────────────
 const DARK = {
   name: "dark",
-  bg:          "#060610",
-  headerBg:    "#08081a",
-  headerBorder:"#1e293b",
-  cardBg:      "#0d0d20",
-  cardBorder:  "#1a1a30",
-  stepBg:      "#0a0a18",
-  stepBorder:  "#14142a",
-  inputBg:     "#0d0d20",
-  inputBorder: "#1e293b",
-  filterBg:    "#0d0d20",
-  filterBorder:"#1e293b",
-  footerBg:    "#0d0d20",
-  footerBorder:"#1a1a30",
-  progressTrack:"#0f172a",
-  miniTrack:   "#0a0a18",
-  badgeBg:     "#00ff9f08",
-  badgeBorder: "#00ff9f30",
-  badgeText:   "#00ff9f",
-  titleLine1:  "#ffffff",
-  titleLine2:  "#00ff9f",
-  titleGlow:   "0 0 60px rgba(0,255,159,0.12)",
-  titleGlow2:  "0 0 60px rgba(0,255,159,0.45)",
-  subText:     "#475569",
-  statBg:      "#0d0d20",
-  statBorder:  "22",
-  labelText:   "#475569",
-  searchText:  "#e2e8f0",
-  filterText:  "#64748b",
+  bg:          "#111118",
+  headerBg:    "#16161e",
+  headerBorder:"#27272a",
+  cardBg:      "#1c1c24",
+  cardBorder:  "#27272a",
+  stepBg:      "#18181f",
+  stepBorder:  "#27272a",
+  inputBg:     "#1c1c24",
+  inputBorder: "#3f3f46",
+  filterBg:    "#1c1c24",
+  filterBorder:"#3f3f46",
+  footerBg:    "#1c1c24",
+  footerBorder:"#27272a",
+  progressTrack:"#27272a",
+  miniTrack:   "#27272a",
+  badgeBg:     "#3b82f610",
+  badgeBorder: "#3b82f630",
+  badgeText:   "#60a5fa",
+  titleLine1:  "#f4f4f5",
+  titleLine2:  "#3b82f6",
+  titleGlow:   "none",
+  titleGlow2:  "none",
+  subText:     "#71717a",
+  statBg:      "#1c1c24",
+  statBorder:  "30",
+  labelText:   "#71717a",
+  searchText:  "#e4e4e7",
+  filterText:  "#a1a1aa",
   filterActBg: "18",
-  cardTitle:   "#f1f5f9",
+  cardTitle:   "#e4e4e7",
   phaseBg:     "15",
-  phaseBorder: "22",
-  descText:    "#64748b",
-  pctDim:      "#475569",
-  countText:   "#334155",
-  chevron:     "#334155",
-  toolBg:      "#111128",
-  toolBorder:  "#1a1a30",
-  toolText:    "#64748b",
-  codeText:    "#94a3b8",
-  codeDone:    "#334155",
-  checkBorder: "#2d3748",
-  checkColor:  "#060610",
-  scanline:    "rgba(0,255,159,0.007)",
+  phaseBorder: "30",
+  descText:    "#a1a1aa",
+  pctDim:      "#71717a",
+  countText:   "#52525b",
+  chevron:     "#52525b",
+  toolBg:      "#27272a",
+  toolBorder:  "#3f3f46",
+  toolText:    "#a1a1aa",
+  codeText:    "#d4d4d8",
+  codeDone:    "#52525b",
+  codeBg:      "#27272a",
+  checkBorder: "#3f3f46",
+  checkColor:  "#ffffff",
+  scanline:    "transparent",
   footerWarn:  "#f87171",
-  footerDesc:  "#334155",
-  footerDescHL:"#64748b",
-  footerCredit:"#1e293b",
-  legendText:  "#475569",
-  emptyText:   "#1e293b",
+  footerDesc:  "#a1a1aa",
+  footerDescHL:"#e4e4e7",
+  footerCredit:"#52525b",
+  legendText:  "#71717a",
+  emptyText:   "#3f3f46",
 };
 
 const LIGHT = {
   name: "light",
-  bg:          "#f0f4f8",
+  bg:          "#f9fafb",
   headerBg:    "#ffffff",
-  headerBorder:"#cbd5e1",
+  headerBorder:"#e5e7eb",
   cardBg:      "#ffffff",
-  cardBorder:  "#e2e8f0",
-  stepBg:      "#f8fafc",
-  stepBorder:  "#e2e8f0",
+  cardBorder:  "#e5e7eb",
+  stepBg:      "#f9fafb",
+  stepBorder:  "#e5e7eb",
   inputBg:     "#ffffff",
-  inputBorder: "#cbd5e1",
+  inputBorder: "#d1d5db",
   filterBg:    "#ffffff",
-  filterBorder:"#cbd5e1",
+  filterBorder:"#d1d5db",
   footerBg:    "#ffffff",
-  footerBorder:"#e2e8f0",
-  progressTrack:"#e2e8f0",
-  miniTrack:   "#f1f5f9",
-  badgeBg:     "#00c97808",
-  badgeBorder: "#00c97830",
-  badgeText:   "#059669",
-  titleLine1:  "#0f172a",
+  footerBorder:"#e5e7eb",
+  progressTrack:"#e5e7eb",
+  miniTrack:   "#f3f4f6",
+  badgeBg:     "#2563eb08",
+  badgeBorder: "#2563eb25",
+  badgeText:   "#2563eb",
+  titleLine1:  "#2d3748",
   titleLine2:  "#2563eb",
   titleGlow:   "none",
   titleGlow2:  "none",
-  subText:     "#64748b",
+  subText:     "#6b7280",
   statBg:      "#ffffff",
   statBorder:  "30",
   labelText:   "#94a3b8",
-  searchText:  "#0f172a",
-  filterText:  "#64748b",
+  searchText:  "#4b5563",
+  filterText:  "#6b7280",
   filterActBg: "15",
-  cardTitle:   "#0f172a",
+  cardTitle:   "#2d3748",
   phaseBg:     "12",
   phaseBorder: "30",
-  descText:    "#64748b",
-  pctDim:      "#94a3b8",
-  countText:   "#94a3b8",
-  chevron:     "#94a3b8",
-  toolBg:      "#f1f5f9",
-  toolBorder:  "#e2e8f0",
-  toolText:    "#475569",
-  codeText:    "#334155",
-  codeDone:    "#94a3b8",
-  checkBorder: "#cbd5e1",
+  descText:    "#6b7280",
+  pctDim:      "#9ca3af",
+  countText:   "#9ca3af",
+  chevron:     "#9ca3af",
+  toolBg:      "#f3f4f6",
+  toolBorder:  "#e5e7eb",
+  toolText:    "#4b5563",
+  codeText:    "#4b5563",
+  codeDone:    "#9ca3af",
+  codeBg:      "#f3f4f6",
+  checkBorder: "#d1d5db",
   checkColor:  "#ffffff",
   scanline:    "transparent",
   footerWarn:  "#dc2626",
-  footerDesc:  "#475569",
-  footerDescHL:"#0f172a",
-  footerCredit:"#94a3b8",
-  legendText:  "#64748b",
-  emptyText:   "#94a3b8",
+  footerDesc:  "#4b5563",
+  footerDescHL:"#2d3748",
+  footerCredit:"#9ca3af",
+  legendText:  "#6b7280",
+  emptyText:   "#9ca3af",
 };
 
 export default function BugHuntingChecklist() {
@@ -771,13 +773,11 @@ export default function BugHuntingChecklist() {
   const collapseAll = () => { const o = {}; filtered.forEach((c) => (o[c.id] = false)); setExpanded((p) => ({ ...p, ...o })); };
 
   return (
-    <div style={{ minHeight: "100vh", width: "100%", background: T.bg, fontFamily: "'Courier New', monospace", color: T.searchText, margin: 0, padding: 0, boxSizing: "border-box", transition: "background 0.3s, color 0.3s" }}>
-
-      {/* Scanline */}
-      <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0, background: `repeating-linear-gradient(0deg,transparent,transparent 2px,${T.scanline} 2px,${T.scanline} 4px)` }} />
+    <div style={{ minHeight: "100vh", width: "100%", background: T.bg, fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", color: T.searchText, margin: 0, padding: 0, boxSizing: "border-box", transition: "background 0.3s, color 0.3s" }}>
 
       {/* ─── HEADER ─── */}
-      <div style={{ width: "100%", background: T.headerBg, borderBottom: `2px solid ${T.headerBorder}`, padding: "36px 40px 28px", boxSizing: "border-box", position: "relative", zIndex: 1, transition: "background 0.3s, border-color 0.3s" }}>
+      <div style={{ width: "100%", background: T.headerBg, borderBottom: `2px solid ${T.headerBorder}`, boxSizing: "border-box", position: "relative", zIndex: 1, transition: "background 0.3s, border-color 0.3s" }}>
+      <div style={{ maxWidth: 1126, width: "100%", margin: "0 auto", padding: "36px clamp(16px, 5vw, 40px) 28px", boxSizing: "border-box" }}>
 
         {/* Badge row — badge left, toggle right */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16, position: "relative" }}>
@@ -845,13 +845,15 @@ export default function BugHuntingChecklist() {
             <span style={{ color: T.titleLine2 }}>{completedCount} / {totalSteps} steps</span>
           </div>
           <div style={{ background: T.progressTrack, borderRadius: 99, height: 8, overflow: "hidden" }}>
-            <div style={{ width: `${progress}%`, height: "100%", background: "linear-gradient(90deg,#00ff9f,#22d3ee,#c084fc,#f472b6)", borderRadius: 99, transition: "width 0.5s ease", boxShadow: progress > 0 ? "0 0 16px rgba(0,255,159,0.35)" : "none" }} />
+            <div style={{ width: `${progress}%`, height: "100%", background: "linear-gradient(90deg,#3b82f6,#8b5cf6)", borderRadius: 99, transition: "width 0.5s ease", boxShadow: progress > 0 ? "0 0 16px rgba(59,130,246,0.35)" : "none" }} />
           </div>
         </div>
       </div>
+      </div>
 
       {/* ─── BODY ─── */}
-      <div style={{ width: "100%", padding: "24px 40px", boxSizing: "border-box", position: "relative", zIndex: 1 }}>
+      <div style={{ width: "100%", boxSizing: "border-box", position: "relative", zIndex: 1 }}>
+      <div style={{ maxWidth: 1126, width: "100%", margin: "0 auto", padding: "24px clamp(16px, 5vw, 40px)", boxSizing: "border-box" }}>
 
         {/* Search */}
         <input
@@ -942,7 +944,7 @@ export default function BugHuntingChecklist() {
                             <div style={{ width: 17, height: 17, borderRadius: 4, flexShrink: 0, marginTop: 2, border: `2px solid ${isDone ? col : T.checkBorder}`, background: isDone ? col : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: T.checkColor, fontWeight: 900, transition: "all 0.15s" }}>
                               {isDone ? "✓" : ""}
                             </div>
-                            <code style={{ fontSize: 11.5, lineHeight: 1.7, color: isDone ? T.codeDone : T.codeText, textDecoration: isDone ? "line-through" : "none", wordBreak: "break-all" }}>
+                            <code style={{ fontSize: 11.5, lineHeight: 1.7, color: isDone ? T.codeDone : T.codeText, background: T.codeBg, textDecoration: isDone ? "line-through" : "none", wordBreak: "break-all" }}>
                               {step.text}
                             </code>
                           </div>
@@ -972,6 +974,7 @@ export default function BugHuntingChecklist() {
           <p style={{ color: T.footerCredit, fontSize: 10, margin: 0, letterSpacing: 3 }}>BUILT BY SPONDON • 2026</p>
         </div>
 
+      </div>
       </div>
     </div>
   );
